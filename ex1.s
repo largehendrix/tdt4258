@@ -84,11 +84,12 @@
 _reset: 
     //aliases
     GPIO_LED .req r5
-    
+    GPIO_BTN .req r6
+    GPIO .req r10
 	/* pls to help */
 	ldr GPIO_LED, =GPIO_PA_BASE
-	ldr r11, =GPIO_PC_BASE
-	ldr r10, =GPIO_BASE
+	ldr GPIO_BTN, =GPIO_PC_BASE
+	ldr GPIO, =GPIO_BASE
 
 	/* Load CMU base */
 
@@ -119,16 +120,31 @@ _reset:
     str r2, [r3]
 
 	/* set pins 0-7 to input */
-	ldr r4, = 0x33333333
-	mov r5, #GPIO_MODEL
-    /* Change r5*/  add r5, r5, r11
-    str r4, [r5]
+	ldr r2, = 0x33333333
+	mov r3, #GPIO_MODEL
+    add r3, r3, GPIO_BTN
+    str r2, [r3]
 
-loop:
-           
-    
+    /* internal pull-up */
+    ldr r2, = 0xff
+    str r2, =[GPIO_BTN, #GPIO_DOUT]
 
-    b loop
+    /* enable gpio interrupt */
+    ldr r1, = 0x22222222
+    str r1, [GPIO, #GPIO_EXTIPSELL]
+
+    /* enable interrupt on button push*/
+    ldr r1, =0xff
+    str r1, [GPIO, #GPIO_EXTIFALL]   // We will only be using extifall as we find pushing a button is a more logical choice
+    str r1, [GPIO, #GPIO_IEN]
+
+    /* enable interrupt handling */
+
+    ldr r1, =0x802
+    ldr r2, =ISER0
+    str r1, [r2]
+
+
 
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -140,6 +156,26 @@ loop:
 	
         .thumb_func
 gpio_handler:  
+
+	/* Clear interrupt */
+	ldr r1, [GPIO, #GPIO_IF]
+	str r1, [GPIO, #GPIO_IFC]
+
+	/* Read button */
+	ldr r1, [GPIO_BASE, #GPIO_DIN]
+
+	/* Read LED */
+	ldr r1, [GPIO_BASE, #GPIO_DOUT]
+
+	/*Shut off lights */
+	/*Set lights to  */
+	low:
+	ldr r1, =0x3
+	str r1, [GPIO, #GPIO_CTRL]
+	/*Set lights to high */
+	high:
+	ldr r1, =0x2
+	str r1, [GPIO, #GPIO_CTRL]
 
 	      b .  // do nothing
 	
