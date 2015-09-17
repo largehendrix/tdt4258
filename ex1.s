@@ -82,8 +82,11 @@
 	      .type   _reset, %function
         .thumb_func
 _reset: 
+    //aliases
+    GPIO_LED .req r5
+    
 	/* pls to help */
-	ldr r12, =GPIO_PA_BASE
+	ldr GPIO_LED, =GPIO_PA_BASE
 	ldr r11, =GPIO_PC_BASE
 	ldr r10, =GPIO_BASE
 
@@ -112,13 +115,13 @@ _reset:
 	/* set pins 8-15 to output */
 	ldr r2, = 0x55555555
 	mov r3, #GPIO_MODEH
-    add r3, r3, r12
+    add r3, r3, GPIO_LED
     str r2, [r3]
 
 	/* set pins 0-7 to input */
 	ldr r4, = 0x33333333
 	mov r5, #GPIO_MODEL
-    add r5, r5, r11
+    /* Change r5*/  add r5, r5, r11
     str r4, [r5]
 
 loop:
