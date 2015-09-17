@@ -83,13 +83,13 @@
         .thumb_func
 _reset: 
 	/* pls to help */
-	ldr r12 = GPIO_PA_BASE
-	ldr r11 = GPIO_PC_BASE
-	ldr r10 = GPIO_BASE
+	ldr r12, =GPIO_PA_BASE
+	ldr r11, =GPIO_PC_BASE
+	ldr r10, =GPIO_BASE
 
 	/* Load CMU base */
 
-	ldr r1 = CMU_BASE
+	ldr r1, = CMU_BASE
 
 	/* load hfperclken0 */
 	ldr r2, [r1, #CMU_HFPERCLKEN0]
@@ -105,19 +105,27 @@ _reset:
 	
 
 	/* set low drive strength */
-	ldr r2 = 0x2
+	ldr r2, = 0x2
 	mov r3, #GPIO_CTRL
 
 
 	/* set pins 8-15 to output */
-	ldr r2 = 0x55555555
-	str r2, [ ]
+	ldr r2, = 0x55555555
+	mov r3, #GPIO_MODEH
+    add r3, r3, r12
+    str r2, [r3]
 
 	/* set pins 0-7 to input */
-	ldr r2 = 0x33333333
-	str r2, [ ]
+	ldr r4, = 0x33333333
+	mov r5, #GPIO_MODEL
+    add r5, r5, r11
+    str r4, [r5]
 
+loop:
+           
+    
 
+    b loop
 
 
 	/////////////////////////////////////////////////////////////////////////////
