@@ -135,14 +135,25 @@ _reset:
 
     /* enable interrupt on button push*/
     ldr r1, =0xff
-    str r1, [GPIO, #GPIO_EXTIFALL]   // We will only be using extifall as we find pushing a button is a more logical choice
+    str r1, [GPIO, #GPIO_EXTIFALL]   // Enable interrupt on button push
+    // str r1, [GPIO, #GPIO_EXTIRISE] // When enabled will enable interrupt on button release
     str r1, [GPIO, #GPIO_IEN]
+
+
 
     /* enable interrupt handling */
 
     ldr r1, =0x802
     ldr r2, =ISER0
     str r1, [r2]
+
+
+	sleep:
+	/* enable sleep */
+	ldr r1, =SCR
+	mov r2, #6
+	str r2,[r1]
+	wfi
 
 
 
@@ -157,27 +168,39 @@ _reset:
         .thumb_func
 gpio_handler:  
 
+
 	/* Clear interrupt */
 	ldr r1, [GPIO, #GPIO_IF]
 	str r1, [GPIO, #GPIO_IFC]
 
+
 	/* Read button */
 	ldr r1, [GPIO_BASE, #GPIO_DIN]
 
+
 	/* Read LED */
-	ldr r1, [GPIO_BASE, #GPIO_DOUT]
+	ldr r3, [GPIO_BASE, #GPIO_DOUT]
+
+	cmp r2, 0b11111110
+	b high
+
+	cmp r2, 0b11111101
+	b low
 
 	/*Shut off lights */
+
+
 	/*Set lights to  */
-	low:
+low:
 	ldr r1, =0x3
 	str r1, [GPIO, #GPIO_CTRL]
+	b sleep
+
 	/*Set lights to high */
-	high:
+high:
 	ldr r1, =0x2
 	str r1, [GPIO, #GPIO_CTRL]
-
-	      b .  // do nothing
+	b sleep
 	
 	/////////////////////////////////////////////////////////////////////////////
 	
