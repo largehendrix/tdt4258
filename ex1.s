@@ -85,8 +85,9 @@ _reset:
     //aliases
     GPIO_LED .req r5
     GPIO_BTN .req r6
-    GPIO .req r10
     CMU .req r7
+    GPIO .req r10
+    
 
 
 	/* Load bases */
@@ -157,7 +158,6 @@ sleep:
 
 
 
-
 	/////////////////////////////////////////////////////////////////////////////
 	//
   // GPIO handler
@@ -173,10 +173,12 @@ gpio_handler:
 	ldr r1, [GPIO, #GPIO_IF]
 	str r1, [GPIO, #GPIO_IFC]
 
-
-	r2, =GPIO_BTN
+	/* Do something when buttons are pressed*/
+	ldr r2 [GPIO_BTN, #GPIO_DIN]
 	lsl r2, r2, #8
-	str GPIO_LED[r2]
+	str r2, [GPIO_LED, #GPIO_DOUT]
+
+	bx lr
 	
 	/////////////////////////////////////////////////////////////////////////////
 	
