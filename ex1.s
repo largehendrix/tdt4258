@@ -104,14 +104,14 @@ _reset:
 	str r2, [CMU, #CMU_HFPERCLKEN0]
 	
 
-	/* set low drive strength */    
-    	ldr r2, = 0x2
+	/* set high drive strength */    
+    ldr r2, = 0x2
 	str r2, [GPIO_LED, #GPIO_CTRL]
     
-    	/* Turn off all LEDs*/
-    	//ldr r2, =0xff
+    /* Turn off all LEDs*/
+    //ldr r2, =0xff
    	//lsl r2, r2, #8
-    	//str r2, [GPIO, #GPIO_DOUT]
+    //str r2, [GPIO, #GPIO_DOUT]
 
 	/* set pins 8-15 to output */
 	mov r2, #0x55555555
@@ -124,34 +124,31 @@ _reset:
 	/* set pins 0-7 to input */
 	ldr r2, = 0x33333333
 	mov r3, #GPIO_MODEL
-    	add r3, r3, GPIO_BTN
-    	str r2, [r3]
+    add r3, r3, GPIO_BTN
+    str r2, [r3]
 
     	/* internal pull-up */
-    	ldr r2, = 0xff
-    	str r2, [GPIO_BTN, #GPIO_DOUT]
+    ldr r2, = 0xff
+    str r2, [GPIO_BTN, #GPIO_DOUT]
 
-    	/* enable gpio interrupt */
-    	ldr r1, = 0x22222222
-    	str r1, [GPIO, #GPIO_EXTIPSELL]
+    /* enable gpio interrupt */
+    ldr r1, = 0x22222222
+    str r1, [GPIO, #GPIO_EXTIPSELL]
 
-    	/* enable interrupt on button push*/
-    	ldr r1, =0xff
-    	str r1, [GPIO, #GPIO_EXTIFALL]   // Enable interrupt on button push
-    	// str r1, [GPIO, #GPIO_EXTIRISE] // When enabled will enable interrupt on button release
-    	str r1, [GPIO, #GPIO_IEN]
+    /* enable interrupt on button push*/
+    ldr r1, =0xff
+    str r1, [GPIO, #GPIO_EXTIFALL]   // Enable interrupt on button push
+    // str r1, [GPIO, #GPIO_EXTIRISE] // When enabled will enable interrupt on button release
+    str r1, [GPIO, #GPIO_IEN]
 
 
 
-    	/* enable interrupt handling */
-
+    /* enable interrupt handling */
    	ldr r1, =0x802
-    	ldr r2, =ISER0
-    	str r1, [r2]
-    	bx lr
+    ldr r2, =ISER0
+    str r1, [r2]
 
-sleep:
-	/* enable sleep */
+	/* enable sleep mode 2 */
 	ldr r1, =SCR
 	mov r2, #6
 	str r2,[r1]
@@ -178,7 +175,7 @@ gpio_handler:
 	ldr r3, = GPIO_PA_BASE
 	ldr r4, = GPIO_PC_BASE
 
-	/* Do something when buttons are pressed*/
+	/* Light up corresponding light to button pushed*/
 	ldr r2, [r4, #GPIO_DIN]
 	lsl r2, r2, #8
 	str r2, [r3, #GPIO_DOUT]
