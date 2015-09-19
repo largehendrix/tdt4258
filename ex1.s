@@ -87,7 +87,6 @@ _reset:
     GPIO_BTN .req r6
     CMU .req r7
     GPIO .req r10
-<<<<<<< HEAD
     
 
 
@@ -102,7 +101,6 @@ _reset:
 
 	/* set gpio bit for clock */
 
-=======
     CMU .req r7
 
 
@@ -118,7 +116,6 @@ _reset:
 	
 
 	/* set gpio bit */
->>>>>>> 65cccd7872417f82ee4238d285e10c9fc0e6a4d7
 	mov r3, #1
 	lsl r3, r3, #CMU_HFPERCLKEN0_GPIO
     ldr r2, [CMU, #CMU_HFPERCLKEN0]
@@ -128,12 +125,10 @@ _reset:
 	str r2, [CMU, #CMU_HFPERCLKEN0]
 	
 
-<<<<<<< HEAD
 	/* set high drive strength */
 	ldr r2, = 0x2
 	mov r3, #GPIO_CTRL
 
-=======
 	/* set low drive strength */
     ldr r1, =GPIO_PA_BASE    
     ldr r2, = 0x3
@@ -143,7 +138,6 @@ _reset:
     //ldr r2, =0xff
     //lsl r2, r2, #8
     //str r2, [GPIO, #GPIO_DOUT]
->>>>>>> 65cccd7872417f82ee4238d285e10c9fc0e6a4d7
 
 	/* set pins 8-15 to output */
 	//ldr r2, = 0x55555555
@@ -189,12 +183,7 @@ sleep:
 
 
 
-<<<<<<< HEAD
-=======
-    
-    
 
->>>>>>> 65cccd7872417f82ee4238d285e10c9fc0e6a4d7
 	/////////////////////////////////////////////////////////////////////////////
 	//
   // GPIO handler
@@ -220,10 +209,8 @@ gpio_handler:
 	lsl r2, r2, #8
 	str r2, [GPIO_LED, #GPIO_DOUT]
 
-<<<<<<< HEAD
 	bx lr
-=======
->>>>>>> 65cccd7872417f82ee4238d285e10c9fc0e6a4d7
+
 	
 	/////////////////////////////////////////////////////////////////////////////
 	
