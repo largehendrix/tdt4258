@@ -4,20 +4,45 @@
 #include "efm32gg.h"
 #include "timer.h"
 
-/* function to setup the timer */
-void setupTimer(uint16_t period)
-{
+/* Function to setup the low energy timer.
+ * This function configures the timer
+ * with a sample rate of 32768
+ */
 
-    //TODO enable and set up the timer
 
-    //1. Enable clock to timer by setting bit 6 in CMU_HFPERCLKEN0
-	*CMU_HFPERCLKEN0 = CMU_HFPERCLKEN0 | CMU_HFPERCLKEN0_TIMER1; // ikke sikker på denne
-    //2. Write the period to register TIMER1_TOP
-	*TIMER1_TOP = period;
-    //3. Enable timer interrupt generation by writing 1 to TIMER1_IEN
-    *TIMER1_IEN = 1;
-    //4. Start the timer by writing 1 to TIMER1_CMD
-    *TIMER1_CMD = 1;
-    //This will cause a timer interrupt to be generated every (period) cycles. Remember to configure the NVIC as well, otherwise the interrupt handler will not be invoked.
+void setupTimer(){
+	*CMU_OSCENCMD = (1 << 6);						/* Enable the low frequency ocelator */
+	*CMU_HFCORECLKEN0 |= (1 << 4); 					/* Enable LE clock */
+	*LETIMER0_CTRL |= (1 << 9); 					/* Set COMP0 as TOP register*/
+	*CMU_LFACLKEN0 |= (1 << 2);		                /* Enable LOW energy timer 0 */
+	*LETIMER0_TOP = 1;								/* Set TOP to 1 */
+	*LETIMER0_IEN = 1;							    /* Enable interrupts */
+	*LETIMER0_CMD = 1;								/* Start timer  Start timer */
 
+}
+
+/* Function to change the sample rate.
+ * Used to tune the sample rate
+ * to be able to play 8000Hz
+ * samples.
+ */
+
+void changeTopCounter(int sample_rate){
+	*LETIMER0_TOP = 32768/sample_rate;
+}
+
+/* Function disables the low energy timer.
+ * Used to save energy when the timer
+ * is not needed. It basically reverts
+ * the changes by setupLowEnergyTimer()
+ */
+
+void disableTimer(){
+	*CMU_OSCENCMD &= ~(1 << 6);
+	*CMU_HFCORECLKEN0 &= (1 << 4);
+	*LETIMER0_CTRL &= (1 << 9);
+	*CMU_LFACLKEN0 &= (1 << 2);
+	*LETIMER0_TOP = 0;
+	*LETIMER0_IEN = 0;
+	*LETIMER0_CMD = 0;
 }

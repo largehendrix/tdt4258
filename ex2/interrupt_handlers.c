@@ -3,33 +3,17 @@
 
 #include "efm32gg.h"
 #include "interrupt_handlers.h"
+#include "sound.h"
 //Include rest of music functions from other c file
 
-void __attribute__ ((interrupt)) TIMER1_IRQHandler() {
-    /* Clear interrupt flag */
-    *TIMER1_IFC = 1;
+void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
 
-    if ( c >= current_note_length ) {
-	c = 0;
-	note_c++;
-    } else {
-	c++;
-    }
+	*LETIMER0_IFC = 1;
 
-    if ( note_c >= current_song->length ) {
-	timer_cleanup();
-	*GPIO_PA_DOUT = 0xFFFF;
-	disableDAC();
-	disableTimer();
-	setupSleep(0b110);
-	return;
-    }
+	/* Feed new samples to the DAC */
+		playSong(sampleArray, songlength);
 
-    Note* n = current_song->notes[note_c];
-    int offset = (i % n->num);
-    note(n, offset);
 
-    i++;
 }
 
 void GPIO_Handler() {
@@ -37,31 +21,105 @@ void GPIO_Handler() {
     GPIO_interrupt_clear();
     GPIO_LED(); // will stay on until end of song
 
-    int SW = map_input();
-    if (SW == 1) {
-	  //Set up different interrupt events and handle accordingly
-    }
-
-    /* Example of previous users
-    playSong(&JUMP, 0x027F);
-      } else if ( SW == 2) {
-  	playSong(&PEWPEW, 0x3FF);
-      } else if ( SW == 3) {
-  	playSong(&ONEUP, 0x71f);
-      } else if (SW == 4) {
-  	playSong(&THATSNOMOON, 0x3FFF);
-      } else if (SW == 5) {
-  	playSong(&SCOM, 0x24FF);
-      } else if (SW == 6) {
-  	playSong(&CANON, 0x17FF);
-      } else if (SW == 7) {
-  	playSong(&CANON, 0x5FFF);
-      } else if (SW == 8) {
-  	playSong(&CANON, 0xFFF);
-      } else {
-  	playSong(&SCOM, 0x24FF);
-      }
-      */
+    switch((*GPIO_PC_DIN)){
+  		case 0xfe:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=mario;
+  			songlength=215;
+  			break;
+  		case 0xfd:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=hit_received;
+  			songlength=36;
+  			break;
+  		case 0xfb:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=hit_dealt;
+  			songlength=41;
+  			break;
+  		case 0xf7:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=shoot;
+  			songlength=15;
+  			break;
+  		case 0xef:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			runBattlefield = 1;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			changeTopCounter(8000);
+  			songlength=396000;
+  			break;
+  		case 0xdf:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=beep1;
+  			songlength=1;
+  			break;
+  		case 0xbf:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=beep2;
+  			songlength=1;
+  			break;
+  		case 0x7f:
+  			if(timer_running){
+  				disableLowEnergyTimer();
+  				disableDAC();
+  				initSound();
+  			}
+  			timer_running = true;
+  			setupDAC();
+  			setupLowEnergyTimer();
+  			sampleArray=beep3;
+  			songlength=1;
+  			break;
+  	}
 
 }
 

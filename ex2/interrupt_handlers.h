@@ -1,7 +1,7 @@
 #ifndef INTERRUPT_HANDLERS_H_
 #define INTERRUPT_HANDLERS_H_
 
-void __attribute__ ((interrupt)) TIMER1_IRQHandler();
+void __attribute__ ((interrupt)) LETIMER0_IRQHandler();
 
 void GPIO_Handler();
 
