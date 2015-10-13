@@ -39,7 +39,7 @@ int main(void)
 
   __asm("WFI"); /* Wait for interrupts */
 
-  while(1);
+  while(1){}
 
   return 0;
 }
