@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
-#include "sound.h"
+#include "sounds.h"
 
 extern struct tone *sampleArray;
 extern int songlength;
@@ -16,15 +16,15 @@ void playMario();
 
 /* TIMER1 interrupt handler.
  * Obselete function. Were used
- * in previous versions of the
+ * in previous versions of the 
  * program.
  *
  */
 
-void __attribute__ ((interrupt)) TIMER1_IRQHandler()
-{
-	*TIMER1_IFC = 1;
-
+void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
+{  
+	*TIMER1_IFC = 1;	
+	
 	playMario();
 	playSong(sampleArray, songlength);
 
@@ -33,32 +33,32 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 /* GPIO even pin interrupt handler
  * This function will call select melody
  * function which is responseble for
- * selecting songs. The songs will be
+ * selecting songs. The songs will be 
  * selected based on the button pushed.
  *
 */
 
-void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()
+void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler() 
 {
 	/* Clear pending interrupts */
-
+	
 	select_melodies();
-
+	
 	*GPIO_IFC = 0xff;
 	*GPIO_PA_DOUT = (*GPIO_PC_DIN << 8);
-
+  
 
 }
 
-/* GPIO odd pin interrupt handler.
+/* GPIO odd pin interrupt handler. 
  * This function will call select melody
  * function which is responseble for
- * selecting songs. The songs will be
+ * selecting songs. The songs will be 
  * selected based on the button pushed.
  *
- */
+ */ 
 
-void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()
+void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler() 
 {
 	*GPIO_IFC = 0xff;
 	select_melodies();
@@ -74,7 +74,7 @@ void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()
  */
 
 void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
-
+	
 	*LETIMER0_IFC = 1;
 
 
@@ -84,6 +84,8 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
 	}else {
 		playSong(sampleArray, songlength);
 	}
-
+	
 
 }
+
+
