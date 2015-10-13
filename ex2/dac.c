@@ -5,9 +5,9 @@
 
 void setupDAC()
 {
- 
+
     //TODO enable and set up the Digital-Analog Converter
-    
+
     //1. Enable the DAC clock by setting bit 17 in CMU_HFPERCLKEN0
     *CMU_HFPERCLKEN0 |= (1 << 17);
     //2. Prescale DAC clock by writing 0x50010 to DAC0_CTRL
@@ -16,5 +16,14 @@ void setupDAC()
     *DAC0_CH0CTRL = 1;
     *DAC0_CH1CTRL = 1;
     //4. Write a continuous stream of samples to the DAC data registers, DAC0_CH0DATA and DAC0_CH1DATA, for example from a timer interrupt
-  
+
+}
+
+void disableDAC()
+{
+	*DAC0_CTRL = 0;
+	*DAC0_CH0CTRL = 0;
+	*DAC0_CH1CTRL = 0;
+    *CMU_HFPERCLKEN0 &= ~(1 << 17);
+
 }
