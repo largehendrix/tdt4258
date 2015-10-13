@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
+#include "interrupt_handlers.h"
 //Include rest of music functions from other c file
 
 void __attribute__ ((interrupt)) TIMER1_IRQHandler() {

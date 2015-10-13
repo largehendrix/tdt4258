@@ -2,6 +2,10 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
+#include "dac.h"
+#include "gpio.h"
+#include "interrupt_handlers.h"
+#include "timer.h"
 
 /*
   TODO calculate the appropriate sample period for the sound wave(s)
