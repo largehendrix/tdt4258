@@ -5,8 +5,7 @@
 #include "gpio.h"
 
 /* function to set up GPIO mode and interrupts*/
-void setupGPIO()
-{
+void setupGPIO(){
   *CMU_HFPERCLKEN0 |= (1 << 13); /* Enable GPIO clock*/
 
 	/*Configure gamepad LEDs*/
