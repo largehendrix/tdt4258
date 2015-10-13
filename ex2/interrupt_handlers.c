@@ -5,6 +5,9 @@
 #include "sound.h"
 //Include rest of music functions from other c file
 
+extern struct tone *sampleArray;
+extern int songlength;
+
 void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
 
 	*LETIMER0_IFC = 1;
@@ -16,9 +19,6 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
 }
 
 void GPIO_Handler() {
-    timer_cleanup();
-    GPIO_interrupt_clear();
-    GPIO_LED(); // will stay on until end of song
 
     switch((*GPIO_PC_DIN)){
   		case 0xfe:
