@@ -2,10 +2,6 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
-#include "dac.h"
-#include "gpio.h"
-#include "interrupt_handlers.h"
-#include "timer.h"
 
 /* The period between sound samples, in clock cycles */
 #define   SAMPLE_PERIOD   0

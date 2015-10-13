@@ -2,7 +2,6 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
-#include "interrupt_handlers.h"
 #include "sound.h"
 //Include rest of music functions from other c file
 
