@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
-#include "sounds.h"
+#include "sound.h"
 
 extern struct tone *sampleArray;
 extern int songlength;
