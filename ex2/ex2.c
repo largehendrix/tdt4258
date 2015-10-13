@@ -17,6 +17,7 @@ void setupTimer(uint32_t period);
 void setupDAC();
 void setupNVIC();
 
+
 /* Your code will start executing here */
 int main(void)
 {
@@ -48,7 +49,6 @@ void setupNVIC()
      You will need TIMER1, GPIO odd and GPIO even interrupt handling for this
      assignment.
   */
-  
 *ISER0 = 0x4000802;
 
 }
