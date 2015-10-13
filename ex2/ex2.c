@@ -7,12 +7,6 @@
 #include "interrupt_handlers.h"
 #include "timer.h"
 
-/*
-  TODO calculate the appropriate sample period for the sound wave(s)
-  you want to generate. The core clock (which the timer clock is derived
-  from) runs at 14 MHz by default. Also remember that the timer counter
-  registers are 16 bits.
-*/
 /* The period between sound samples, in clock cycles */
 #define   SAMPLE_PERIOD   0
 
@@ -36,10 +30,10 @@ int main(void)
 
   /* Enable interrupt handling */
   setupNVIC();
-  
+
   __asm("WFI"); /* Wait for interrupts */
 
-  while(1);
+  while(1){}
 
   return 0;
 }
