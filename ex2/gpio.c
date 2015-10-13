@@ -8,6 +8,20 @@ void setupGPIO()
 {
   /* TODO set input and output pins for the joystick */
 
+  CMU_periClockEnable(CMU_GPIO, true);
+  GPIO_IRQsetupRange(GPIO_portC, 0, 7, false, true, true);
+
+  // LED setup
+  GPIO_portSetupRange(GPIO_portA, 8, 15, GPIO_PUSHPULLDRIVE);
+  GPIO_driveStrength(GPIO_portA, GPIO_HIGH);
+
+  // Button setup
+  GPIO_portSetupRange(GPIO_portC, 0, 7, GPIO_INPUTPULLFILTER);
+  *GPIO_PC_DOUT = 0xFF; // pull-up
+
+  NVIC_IRQenable(IRQ_GPIO_EVEN, true);
+  NVIC_IRQenable(IRQ_GPIO_ODD, true);
+
   /* Example of HW access from C code: turn on joystick LEDs D4-D8
      check efm32gg.h for other useful register definitions
   */
