@@ -3,13 +3,43 @@
 
 #include "efm32gg.h"
 
+#define CLOCK_FREQUENCY 14000000
+
+/* function to setup the timer.
+ * This function is obselete.
+ * Not used in the energy
+ * optimized version.
+ */
+
+void setupTimer(uint16_t period)
+{
+
+	*CMU_HFPERCLKEN0 |= (1 << 6);
+	*TIMER1_TOP = CLOCK_FREQUENCY/period;
+	*TIMER1_IEN = 1;
+	*TIMER1_CMD = 1;
+}
+
+/*Function to disable the timer.
+ * This function is obselete.
+ * Not used in the energy
+ * optimized version
+ * */
+
+void disableTimer()
+{
+	*CMU_HFPERCLKEN0 &= ~(1 << 6);
+	*TIMER1_TOP = 0;
+	*TIMER1_IEN = 0;
+	*TIMER1_CMD = 0;
+}
+
 /* Function to setup the low energy timer.
  * This function configures the timer
  * with a sample rate of 32768
  */
 
-
-void setupTimer(){
+void setupLowEnergyTimer(){
 	*CMU_OSCENCMD = (1 << 6);						/* Enable the low frequency ocelator */
 	*CMU_HFCORECLKEN0 |= (1 << 4); 					/* Enable LE clock */
 	*LETIMER0_CTRL |= (1 << 9); 					/* Set COMP0 as TOP register*/
@@ -36,7 +66,7 @@ void changeTopCounter(int sample_rate){
  * the changes by setupLowEnergyTimer()
  */
 
-void disableTimer(){
+void disableLowEnergyTimer(){
 	*CMU_OSCENCMD &= ~(1 << 6);
 	*CMU_HFCORECLKEN0 &= (1 << 4);
 	*LETIMER0_CTRL &= (1 << 9);
