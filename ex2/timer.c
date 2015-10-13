@@ -11,7 +11,7 @@
  * optimized version.
  */
 
-void setupTimer(uint16_t period)
+void setupLowEnergyTimer(uint16_t period)
 {
 
 	*CMU_HFPERCLKEN0 |= (1 << 6);
@@ -26,7 +26,7 @@ void setupTimer(uint16_t period)
  * optimized version
  * */
 
-void disableTimer()
+void disableLowEnergyTimer()
 {
 	*CMU_HFPERCLKEN0 &= ~(1 << 6);
 	*TIMER1_TOP = 0;
@@ -39,7 +39,7 @@ void disableTimer()
  * with a sample rate of 32768
  */
 
-void setupLowEnergyTimer(){
+void setupTimer(){
 	*CMU_OSCENCMD = (1 << 6);						/* Enable the low frequency ocelator */
 	*CMU_HFCORECLKEN0 |= (1 << 4); 					/* Enable LE clock */
 	*LETIMER0_CTRL |= (1 << 9); 					/* Set COMP0 as TOP register*/
@@ -66,7 +66,7 @@ void changeTopCounter(int sample_rate){
  * the changes by setupLowEnergyTimer()
  */
 
-void disableLowEnergyTimer(){
+void disableTimer(){
 	*CMU_OSCENCMD &= ~(1 << 6);
 	*CMU_HFCORECLKEN0 &= (1 << 4);
 	*LETIMER0_CTRL &= (1 << 9);
