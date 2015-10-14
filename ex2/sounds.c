@@ -254,7 +254,7 @@ void select_melodies(){
 			runBattlefield = 1;
 			setupDAC();
 			setupLowEnergyTimer();
-			changeTopCounter(2000);
+			changeTopCounter(14000);
 			songlength=396000;
 			break;
 		case 0xdf:
