@@ -6,8 +6,6 @@
 #define GPIO_PB_BASE 0x40006024
 #define GPIO_PC_BASE 0x40006048
 
-#define GPIO_BASE 0x40006100
-
 #define GPIO_PA_CTRL     ((volatile uint32_t*)(GPIO_PA_BASE + 0x00))
 #define GPIO_PA_MODEL    ((volatile uint32_t*)(GPIO_PA_BASE + 0x04))
 #define GPIO_PA_MODEH    ((volatile uint32_t*)(GPIO_PA_BASE + 0x08))
@@ -54,6 +52,7 @@
 #define CMU_HFCORECLKEN0 ((volatile uint32_t*)(CMU_BASE2 + 0x040))
 #define CMU_HFPERCLKEN0  ((volatile uint32_t*)(CMU_BASE2 + 0x044))
 #define CMU_CMD          ((volatile uint32_t*)(CMU_BASE2 + 0x024))
+//added register pointers for proper setup of Low Energy Timer
 #define CMU_LFACLKEN0    ((volatile uint32_t*)(CMU_BASE2 + 0x058))
 #define CMU_LFCLKSEL	 ((volatile uint32_t*)(CMU_BASE2 + 0x028))
 #define CMU_OSCENCMD 	 ((volatile uint32_t*)(CMU_BASE2 + 0x020))
@@ -65,11 +64,12 @@
 #define CMU2_HFPERCLKEN0_TIMER1 (1 << 6)
 
 #define CMU_HFCORECLKEN0_DMA (1 << 0)
+//added register pointers for proper setup of Low Energy Timer
 #define CMU_LFACLKEN0_LETTIMER0 (1 << 2)
 
 
 
-//LETIMER0
+////added register pointers for proper setup of Low Energy Timer
 #define LETIMER0_BASE 0x40082000
 
 #define LETIMER0_CTRL ((volatile uint32_t*)(LETIMER0_BASE + 0x000)) 
