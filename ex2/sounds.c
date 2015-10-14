@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "sound_data.h"
 #include "melodies.h"
-
+#include "wilhelm.h"
 #define SAMPLING_FREQUENCY 32768
 
 
@@ -116,8 +116,15 @@ void sawtoothWave(int note, int time){
  * are disabled.
  *
  */
-void play_music(int size){
-	int note = (char)sounddata_data[notes_pos];
+void play_music(int size, int mode){
+	int note = 0;
+
+	if(mode == 1){
+		note = (char)sounddata_data[notes_pos];
+	}
+	else if(mode == 2){
+		note = (char)wilhelm[notes_pos]
+	}
 
 
 	*DAC0_CH0DATA = (note << 1);
@@ -215,10 +222,11 @@ void select_melodies(){
 				initSound();
 			}
 			timer_running = true;
+			runBattlefield = 2;
 			setupDAC();
 			setupLowEnergyTimer();
-			sampleArray=hit_received;
-			songlength=36;
+			changeTopCounter(9000);
+			songlength=10000;
 			break;
 		case 0xfb:
 			if(timer_running){
