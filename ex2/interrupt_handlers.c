@@ -10,25 +10,6 @@ extern int runBattlefield;
 
 void disableLowEnergyTimer();
 void disableDAC();
-void playMario();
-
-
-
-/* TIMER1 interrupt handler.
- * Obselete function. Were used
- * in previous versions of the 
- * program.
- *
- */
-
-void __attribute__ ((interrupt)) TIMER1_IRQHandler() 
-{  
-	*TIMER1_IFC = 1;	
-	
-	playMario();
-	playSong(sampleArray, songlength);
-
-}
 
 /* GPIO even pin interrupt handler
  * This function will call select melody
