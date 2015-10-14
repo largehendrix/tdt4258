@@ -32,7 +32,7 @@ struct tone{
 void playNotes(int note, int time);
 void silence(int time);
 void play_note(int);
-void play_music(int lenght);
+void play_music(int lenght, int mode);
 void sawtoothWave(int note, int time);
 void select_melodies();
 void initSound();
