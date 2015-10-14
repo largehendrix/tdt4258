@@ -226,7 +226,7 @@ void select_melodies(){
 			setupDAC();
 			setupLowEnergyTimer();
 			changeTopCounter(9000);
-			songlength=9000;
+			songlength=8800;
 			break;
 		case 0xfb:
 			if(timer_running){
