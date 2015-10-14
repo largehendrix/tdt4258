@@ -64,7 +64,7 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler(){
 		play_music(songlength, 1);
 	}
 	else if(runBattlefield == 2){
-		play_music(songlength, 2)
+		play_music(songlength, 2);
 	}
 	else {
 		playSong(sampleArray, songlength);
