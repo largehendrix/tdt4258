@@ -11,7 +11,7 @@
   registers are 16 bits.
 */
 /* The period between sound samples, in clock cycles */
-#define SAMPLE_PERIOD 8187
+#define SAMPLE_PERIOD 32748
 
 
 /* Declaration of peripheral setup functions */
