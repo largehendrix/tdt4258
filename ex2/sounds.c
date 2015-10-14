@@ -123,7 +123,7 @@ void play_music(int size, int mode){
 		note = (char)sounddata_data[notes_pos];
 	}
 	else if(mode == 2){
-		note = (char)wilhelm[notes_pos]
+		note = (char)wilhelm[notes_pos];
 	}
 
 
