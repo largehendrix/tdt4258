@@ -10,8 +10,13 @@
   from) runs at 14 MHz by default. Also remember that the timer counter
   registers are 16 bits.
 */
+<<<<<<< HEAD
 /* The period between sound samples, in clock cycles */
 #define SAMPLE_PERIOD 16374
+=======
+/* The period between sound samples, in clock cycles. */
+#define SAMPLE_PERIOD 32748
+>>>>>>> 195f382ce9ad8aabaf55467758508adc867bc6d5
 
 /* Declaration of peripheral setup functions */
 void setupTimer(uint32_t period);
