@@ -20,9 +20,7 @@
  * in the efm32gg.h, as it lacked a few addresses.
 */
 
-/* Set up of the low energy timer.
- * This function configures the timer 
- * with a sample rate of 32768
+/* Set up of the low energy timer. This function configures the timer with a sample rate of 32768
  */
 
 void setupLowEnergyTimer(){	
