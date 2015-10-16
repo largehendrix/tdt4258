@@ -25,7 +25,7 @@
 
 void setupLowEnergyTimer(){	
 
-	*CMU_OSCENCMD = (1 << 6);						/* Enable the low frequency ocelator */
+	*CMU_OSCENCMD = (1 << 6);						/* Enable the low frequency oscillator */
 	*CMU_HFCORECLKEN0 |= (1 << 4); 					/* Enable LE clock */
 	*LETIMER0_CTRL |= (1 << 9); 					/* Set COMP0 as TOP register*/
 	*CMU_LFACLKEN0 |= (1 << 2);		                /* Enable LOW energy timer 0 */
