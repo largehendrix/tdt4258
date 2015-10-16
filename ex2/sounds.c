@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include "sound_data.h"
 #include "melodies.h"
-#include "wilhelm.h"
 #define SAMPLING_FREQUENCY 32768
 
 
@@ -126,6 +125,17 @@ void play_music(int size, int mode){
 		note = (char)wilhelm[notes_pos];
 	}
 
+	switch((mode)){
+		case 1:
+			note = (char)sounddata_data[notes_pos];
+		case 2:
+			note = (char)wilhelm[notes_pos];
+		case 3:
+			note = (char)xFiles[notes_pos];
+		case 4:
+			note = (char)humanMusic[notes_pos];
+	}
+
 
 	*DAC0_CH0DATA = (note << 1);
 	*DAC0_CH1DATA = (note << 1);
@@ -210,10 +220,11 @@ void select_melodies(){
 				initSound();
 			}
 			timer_running = true;
+			runBattlefield = 3;
 			setupDAC();
 			setupLowEnergyTimer();
-			sampleArray=mario;
-			songlength=215;
+			changeTopCounter(9000);
+			songlength=75000;
 			break;
 		case 0xfd:
 			if(timer_running){
@@ -235,10 +246,11 @@ void select_melodies(){
 				initSound();
 			}
 			timer_running = true;
+			runBattlefield = 4;
 			setupDAC();
 			setupLowEnergyTimer();
-			sampleArray=hit_dealt;
-			songlength=41;
+			changeTopCounter(9000);
+			songlength=11000;
 			break;
 		case 0xf7:
 			if(timer_running){

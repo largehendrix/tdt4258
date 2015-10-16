@@ -19,15 +19,12 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler()
 	/*
     TODO feed new samples to the DAC
     remember to clear the pending interrupt by writing 1 to TIMER1_IFC
-    */ 
+    */
 	*LETIMER0_IFC = 1;
 
 	/* Feed new samples to the DAC */
-	if(runBattlefield == 1){
-		play_music(songlength, 1);
-	}
-	else if(runBattlefield == 2){
-		play_music(songlength, 2);
+	if(runBattlefield != 0){
+		play_music(songlength, runBattlefield);
 	}
 	else {
 		playSong(sampleArray, songlength);
