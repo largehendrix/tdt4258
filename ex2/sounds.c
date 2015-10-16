@@ -117,13 +117,14 @@ void sawtoothWave(int note, int time){
  */
 void play_music(int size, int mode){
 	int note = 0;
-
+/*
 	if(mode == 1){
 		note = (char)sounddata_data[notes_pos];
 	}
 	else if(mode == 2){
 		note = (char)wilhelm[notes_pos];
 	}
+*/
 
 	switch((mode)){
 		case 1:
