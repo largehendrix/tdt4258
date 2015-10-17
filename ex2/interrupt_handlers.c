@@ -23,7 +23,7 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler()
 	*LETIMER0_IFC = 1;
 
 	/* Feed new samples to the DAC */
-	if(runBattlefield != 0){
+	if(runBattlefield){
 		play_music(songlength, runBattlefield);
 	}
 	else {
