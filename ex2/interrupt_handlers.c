@@ -4,9 +4,8 @@
 #include "efm32gg.h"
 #include "sounds.h"
 
-extern struct tone *sampleArray;
 extern int songlength;
-extern int runBattlefield;
+extern int soundEffect;
 
 void disableLowEnergyTimer();
 void disableDAC();
@@ -23,8 +22,8 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler()
 	*LETIMER0_IFC = 1;
 
 	/* Feed new samples to the DAC */
-	if(runBattlefield){
-		play_music(songlength, runBattlefield);
+	if(soundEffect){
+		play_music(songlength, soundEffect);
 	}
 }
 
