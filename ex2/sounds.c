@@ -23,6 +23,7 @@ int pos;             		/* Keeps track of the position in the cusomized samples *
 
 int songlength;				/* Sample lenght */
 int soundEffect;			/* Variable used to run sound samples for sound effects */
+int counter=0;				/* Keeps track of time duration of tone */
 
 
 /* Set all variables to default */
