@@ -26,9 +26,6 @@ void __attribute__ ((interrupt)) LETIMER0_IRQHandler()
 	if(runBattlefield){
 		play_music(songlength, runBattlefield);
 	}
-	else {
-		playSong(sampleArray, songlength);
-	}
 }
 
 /* GPIO even pin interrupt handler */

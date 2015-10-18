@@ -29,14 +29,11 @@ struct tone{
 	int note, time;
 };
 
-void playNotes(int note, int time);
 void silence(int time);
 void play_note(int);
 void play_music(int lenght, int mode);
-void sawtoothWave(int note, int time);
 void select_melodies();
 void initSound();
 void initPos();
-void playSong(struct tone melody[], int size);
 
 #endif
