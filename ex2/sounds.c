@@ -62,6 +62,20 @@ void play_music(int size, int mode){
 	else if(mode == 4){
 		note = (char)humanMusic[notes_pos];
 	}
+	else if(mode == 5){
+		note = (char)hoodini[notes_pos];
+	}
+	else if(mode == 6){
+		note = (char)jump[notes_pos];
+	}
+	else if(mode == 7){
+		note = (char)sword[notes_pos];
+	}
+	else if(mode == 8){
+		note = (char)wasted[notes_pos];
+	}
+
+
 
 	*DAC0_CH0DATA = (note << 1);
 	*DAC0_CH1DATA = (note << 1);
@@ -154,7 +168,7 @@ void select_melodies(){
 			setupDAC();
 			setupLowEnergyTimer();
 			changeTopCounter(9000);
-			songlength=8800;
+			songlength=15900;
 			break;
 		case 0xdf:
 			if(timer_running){
@@ -167,7 +181,7 @@ void select_melodies(){
 			setupDAC();
 			setupLowEnergyTimer();
 			changeTopCounter(9000);
-			songlength=8800;
+			songlength=21900;
 			break;
 		case 0xbf:
 			if(timer_running){
@@ -180,7 +194,7 @@ void select_melodies(){
 			setupDAC();
 			setupLowEnergyTimer();
 			changeTopCounter(9000);
-			songlength=8800;
+			songlength=1800;
 			break;
 		case 0x7f:
 			if(timer_running){
@@ -193,7 +207,7 @@ void select_melodies(){
 			setupDAC();
 			setupLowEnergyTimer();
 			changeTopCounter(9000);
-			songlength=8800;
+			songlength=65000;
 			break;
 	}
 }
