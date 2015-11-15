@@ -27,15 +27,9 @@ int main(void) {
 	initSound(); /* Reset every global variable at reset */
   setupGPIO();
 
-	/* These functions are called when needed. E.g when we play tunes. See
-	 * sounds.c:selectMelodies() */
-	//setupDAC();
-  //setupLowEnergyTimer();
-  //setupTimer(48000);
-
   /* Enable interrupt handling */
  	setupNVIC();
- 
+
   /* TODO for higher energy efficiency, sleep while waiting for interrupts
      instead of infinite loop for busy-waiting
   */
