@@ -23,6 +23,51 @@ void deinit()
     deinit_framebuffer();
 }
 
+void sigio_handler(int signo){
+  printf("Signal nr.: %d\n", signo);
+      int input = map_buttons(fgetc(device));
+      switch (input) {
+          case 1:
+              p1(1);
+              break;
+          case 2:
+              p1(2);
+              break;
+          case 3:
+              p1(3);
+              break;
+          case 4:
+              p1(4);
+              break;
+          case 5:
+              p2(1);
+              break;
+          case 6:
+              p2(2);
+              break;
+          case 7:
+              p2(3);
+              break;
+          case 8:
+              p2(4);
+              break;
+      }
+      last_input = input;
+}
+
+void p1(int value){
+  choice = value;
+}
+
+void p2(int value){
+  computer = value;
+}
+
+void new_game()
+{
+    //New game stuff here
+}
+
 int init_gamepad()
 {
     device = fopen("/dev/gamepad", "rb");
@@ -49,6 +94,18 @@ int init_gamepad()
 void deinit_gamepad()
 {
     fclose(device);
+}
+
+int map_buttons(int input)
+{
+    input = ~input;
+    for ( int i = 0; i < 8; i++) {
+        int match = input & (1 << i);
+        if ( (1 << i) == match ) {
+            return (i+1);
+        }
+    }
+    return 0;
 }
 
 int check_winner(int p1, int p2){
@@ -115,7 +172,8 @@ int AI_move(){
 
 int main(int argc, char *argv[])
 {
-  int R=1;
+    init_gamepad()
+    int R=1;
     int P=2;
     int S=3;
     int i;
