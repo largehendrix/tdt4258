@@ -25,34 +25,38 @@ void deinit()
 
 void sigio_handler(int signo){
   printf("Signal nr.: %d\n", signo);
-      int input = map_buttons(fgetc(device));
-      switch (input) {
-          case 1:
-              p1(1);
-              break;
-          case 2:
-              p1(2);
-              break;
-          case 3:
-              p1(3);
-              break;
-          case 4:
-              p1(4);
-              break;
-          case 5:
-              p2(1);
-              break;
-          case 6:
-              p2(2);
-              break;
-          case 7:
-              p2(3);
-              break;
-          case 8:
-              p2(4);
-              break;
-      }
-      last_input = input;
+  if (waitForInput == 1){
+    int input = map_buttons(fgetc(device));
+    switch (input) {
+        case 1:
+            p1(1);
+            break;
+        case 2:
+            p1(2);
+            break;
+        case 3:
+            p1(3);
+            break;
+        case 4:
+            p1(4);
+            break;
+        case 5:
+            p2(1);
+            break;
+        case 6:
+            p2(2);
+            break;
+        case 7:
+            p2(3);
+            break;
+        case 8:
+            p2(4);
+            break;
+    }
+    last_input = input;
+    waitForInput = 0;
+  }
+
 }
 
 void p1(int value){
@@ -182,6 +186,7 @@ int main(int argc, char *argv[])
     int choice;
     int computer
     int state // 0 = draw, 1 = player1 win, 2 = player2 win
+    int waitForInput
     srand(time(NULL));
     printf("Rock=1 , Paper= 2, and Scissors= 3\n");
 
@@ -191,15 +196,16 @@ int main(int argc, char *argv[])
           TODO: Draw idle screen with "make your choice"
       */
         printf("Enter your choice:");
-        /*
-           TODO:
-           Handle button press here and translate it to a choice
-           Someting like: choice = handlePlayerMove()
-           Will return either 1,2 or 3
-        */
-
+        waitForInput = 1
+        for (i = 0; i < 10; i++) {
+          sleep(1);
+          if (waitForInput == 0){
+            printf("done\n");
             computer = AI_move()
             state = check_winner(choice, computer)
+            break
+          }
+        }
         /*
             TODO:
             Handle graphics update here based on winner gotten from state
